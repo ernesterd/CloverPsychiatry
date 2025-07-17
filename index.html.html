@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CLOVER PSYCHIATRY - Mental Health & Family Practice</title>
+    <link rel="stylesheet" href="CSS/styles.css" />
+   <style> /* Modal Overlay */
+       </style>
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('appointmentForm');
+      const successModal = document.getElementById('successModal');
+      const errorModal = document.getElementById('errorModal');
+    
+      // Function to close modals
+      window.closeModal = function(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+      };
+    
+      // Close modals when clicking outside the modal-content
+      window.onclick = function(event) {
+        if (event.target === successModal) {
+          successModal.style.display = 'none';
+        }
+        if (event.target === errorModal) {
+          errorModal.style.display = 'none';
+        }
+      };
+    
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+    
+        // Basic HTML5 validation check
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+    
+        // Collect form data in JSON format
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => data[key] = value.trim());
+    
+        try {
+          const response = await fetch('/api/appointments', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+          });
+    
+          if (!response.ok) {
+            // Attempt to parse error message from backend if available
+            const errData = await response.json().catch(() => null);
+            throw new Error(errData?.message || 'Failed to submit appointment.');
+          }
+    
+          // On success show success modal
+          successModal.style.display = 'block';
+          form.reset();
+    
+        } catch (error) {
+          // Show error modal with message
+          errorModal.style.display = 'block';
+          document.getElementById('errorDesc').textContent = error.message;
+        }
+      });
+    });
+    </script>
+<body>
+    <!-- Removed improper <td> tags outside of table -->
+    <div style="display: flex; align-items: center; gap: 1rem; margin: 1rem 20px;">
+        <img src="image/Photoroom-20250715_150932.png" alt="Clover Psychiatry Logo" style="width: 10rem;" />
+        <h1 style="font-size: 1.5rem;">CLOVER PSYCHIATRY - Mental Health & Family Practice</h1>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <div class="clover-icon" aria-hidden="true">🍀</div>
+                    <span>Clover Psychiatry</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#booking">Book Appointment</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section id="home" class="hero">
+                <h1>Welcome to Clover Psychiatry</h1>
+                <p>Mental Health &amp; Family Practice</p>
+                <button type="button" class="cta-button">Book Your Appointment</button>
+            </section>
+            <section id="services" class="services-section">
+                <h2 class="section-title">Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">🧠</div>
+                        <h3>Anxiety</h3>
+                        <p>One-on-one sessions tailored to your specific needs and goals for mental wellness.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">👥</div>
+                        <h3>Depression</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">💊</div>
+                        <h3>Acute & Chronic Disease Management</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">🏠</div>
+                        <h3>ADHD, Insomnia</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">😰</div>
+                        <h3>Bipolar Disorder</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">🚨</div>
+                        <h3>Personality Disorder</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">🚨</div>
+                        <h3>Schizophrenia</h3>
+                        <p>Immediate support and intervention during mental health crises.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">🚨</div>
+                        <h3>Eating Disorder</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">🚨</div>
+                        <h3>Work, Sport &amp; School Physicals</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">🚨</div>
+                        <h3>STI Screening &amp; Treatment</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">🚨</div>
+                        <h3>Hypertension, Diabetes</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">🚨</div>
+                        <h3>Vaccination, TB Skin Test</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">🚨</div>
+                        <h3>Annual Wellness Exam</h3>
+                        <p>Immediate support and intervention during mental health crises.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="booking" class="booking-section">
+                <div class="container">
+                    <h2 class="section-title">Book Your Appointment</h2>
+                    <form class="booking-form" id="appointmentForm" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required autocomplete="given-name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required autocomplete="family-name" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required autocomplete="email" />
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required autocomplete="tel"
+                                    pattern="[+0-9\s\-().]{7,}" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="service">Service Type *</label>
+                                <select id="service" name="service" required>
+                                    <option value="">Select a service</option>
+                                    <option value="anxiety">Anxiety</option>
+                                    <option value="depression">Depression</option>
+                                    <option value="adhd insomnia">ADHD, Insomnia</option>
+                                    <option value="acute chronic disease management">Acute &amp; Chronic Disease Management
+                                    </option>
+                                    <option value="bipolar disorder">Bipolar Disorder</option>
+                                    <option value="personality disorder">Personality Disorder</option>
+                                    <option value="work sport school physicals">Work, Sport &amp; School Physicals</option>
+                                    <option value="sti screening treatment">STI Screening &amp; Treatment</option>
+                                    <option value="hypertension diabetes">Hypertension, Diabetes</option>
+                                    <option value="vaccination tb skin test">Vaccination, TB Skin Test</option>
+                                    <option value="annual wellness exam">Annual Wellness Exam</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="insurance">Insurance Provider</label>
+                                <select id="insurance" name="insurance">
+                                    <option value="">Select insurance</option>
+                                    <option value="bcbs texas aetna">BCBS of Texas, Aetna</option>
+                                    <option value="united healthcare optum">United Healthcare (Optum)</option>
+                                    <option value="cigna">Cigna</option>
+                                    <option value="quest behavioral health">Quest Behavioral Health</option>
+                                    <option value="oscar optum">Oscar (Optum)</option>
+                                    <option value="oxford uptum">Oxford (Uptum)</option>
+                                    <option value="bcbs massachusetts">BCBS of Massachusetts</option>
+                                    <option value="selfpay">Self-Pay</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="preferredDate">Preferred Date *</label>
+                                <input type="date" id="preferredDate" name="preferredDate" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="preferredTime">Preferred Time *</label>
+                                <select id="preferredTime" name="preferredTime" required>
+                                    <option value="">Select time</option>
+                                    <option value="09:00">9:00 AM</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="13:00">1:00 PM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                    <option value="16:00">4:00 PM</option>
+                                    <option value="17:00">5:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reason">Reason for Visit</label>
+                            <textarea id="reason" name="reason"
+                                placeholder="Please describe your concerns or reason for seeking treatment (optional)"></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Book Appointment</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer id="contact" class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact Information</h4>
+                    <address>
+                        📍 10503 Rockley Rd Ste 100<br />Houston TX 77099<br />
+                        📞 <a href="tel:3465023406" style="color: white; text-decoration: none;">346-502-3406</a><br />
+                        📞 <a href="tel:3465023462" style="color: white; text-decoration: none;">346-502-3462</a><br />
+                        ✉️ <a href="mailto:clover.psych@yahoo.com"
+                            style="color: white; text-decoration: none;">clover.psych@yahoo.com</a>
+                    </address>
+                </div>
+                <div class="footer-section">
+                    <h3>Office Hours</h3>
+                    <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
+                    <p>Sunday: Closed</p>
+                    <p>Emergency: 24/7 Crisis Line</p>
+                </div>
+                <div class="footer-section">
+                    <h3>About Clover Psychiatry</h3>
+                    <p>We ACCEPT major Insurance and Private pay</p>
+                    <p>Providing compassionate mental health care with evidence-based treatments in a supportive
+                        environment.</p>
+                </div>
+            </div>
+            <p>© 2024 Clover Psychiatry. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Correct script tag for external JS -->
+    <script src="Javascript 1/javascript.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const form = document.querySelector('form');
+          if (!form) return;
+          form.addEventListener('submit', e => {
+            e.preventDefault();
+            alert('Thank you! The booking system is coming soon. Please check back later.');
+            form.reset();
+          });
+        });
+      </script>
+</body>
+
+</html>
